@@ -1,0 +1,61 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    match /appointments/{appointmentId} {
+      allow read: if true;
+      allow create: if isValidId(appointmentId) && request.resource.data.keys().hasAll(['id', 'consultantName', 'clientName', 'mobile', 'date', 'timeSlot', 'status']);
+      allow update: if true;
+      allow delete: if true;
+    }
+
+    match /consultants/{consultantId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if true;
+
+      match /reviews/{reviewId} {
+        allow read: if true;
+        allow create, update: if true;
+        allow delete: if true;
+      }
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if true;
+    }
+
+    match /pending_consultants/{appId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if true;
+    }
+
+    match /consultant_subscriptions/{subId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if true;
+    }
+
+    match /consultant_activity_logs/{logId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if true;
+    }
+  }
+}
