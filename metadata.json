@@ -1,0 +1,6 @@
+{
+  "name": "E-LAWYERS - Legal & Business Consultancy Firm",
+  "description": "Official E-LAWYERS platform for Legal & Business Consultancy in Bangladesh featuring expert partners, advocates, tax advisers, and automated scheduling.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

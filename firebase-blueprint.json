@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Legal consultation appointment record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "consultantId": { "type": "string" },
+        "consultantName": { "type": "string" },
+        "clientName": { "type": "string" },
+        "mobile": { "type": "string" },
+        "email": { "type": "string" },
+        "consultationType": { "type": "string" },
+        "date": { "type": "string" },
+        "timeSlot": { "type": "string" },
+        "meetingMethod": { "type": "string" },
+        "preferredLanguage": { "type": "string" },
+        "issueSummary": { "type": "string" },
+        "amountPaid": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "trxId": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "meetingLink": { "type": "string" },
+        "driveFolderUrl": { "type": "string" },
+        "driveFileUrls": { "type": "array" },
+        "calendarEventId": { "type": "string" },
+        "hasReviewed": { "type": "boolean" },
+        "reviewId": { "type": "string" },
+        "reviewRating": { "type": "number" }
+      },
+      "required": ["id", "consultantName", "clientName", "mobile", "date", "timeSlot", "status"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Post-consultation client review and rating for a legal consultant",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "consultantId": { "type": "string" },
+        "consultantName": { "type": "string" },
+        "clientName": { "type": "string" },
+        "clientEmail": { "type": "string" },
+        "userId": { "type": "string" },
+        "appointmentId": { "type": "string" },
+        "rating": { "type": "number" },
+        "date": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "title": { "type": "string" },
+        "comment": { "type": "string" },
+        "verifiedBooking": { "type": "boolean" },
+        "category": { "type": "string" },
+        "criteria": { "type": "object" },
+        "tags": { "type": "array" },
+        "recommendLawyer": { "type": "boolean" },
+        "anonymous": { "type": "boolean" }
+      },
+      "required": ["id", "consultantId", "clientName", "rating", "comment"]
+    },
+    "Consultant": {
+      "title": "Consultant",
+      "description": "Legal consultant profile and ratings in Firestore",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "title": { "type": "string" },
+        "designation": { "type": "string" },
+        "rating": { "type": "number" },
+        "averageRating": { "type": "number" },
+        "reviewsCount": { "type": "number" },
+        "ratingCount": { "type": "number" },
+        "totalConsultations": { "type": "number" },
+        "reviews": { "type": "array" }
+      },
+      "required": ["id", "name"]
+    }
+  },
+  "firestore": {
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Collection of legal consultation appointments"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Global collection of post-consultation client reviews"
+    },
+    "/consultants/{consultantId}": {
+      "schema": "Consultant",
+      "description": "Consultant profile document with aggregated ratings"
+    },
+    "/consultants/{consultantId}/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Subcollection of client reviews for specific consultant"
+    },
+    "/pending_consultants/{appId}": {
+      "schema": "PendingConsultantApplication",
+      "description": "Collection of pending consultant registration applications"
+    }
+  }
+}
